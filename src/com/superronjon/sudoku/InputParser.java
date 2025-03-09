@@ -5,11 +5,13 @@ import java.util.Arrays;
 import java.util.List;
 
 public class InputParser {
-    private List<String> tokens;
+    private final List<String> tokens;
     private String boardString;
     private boolean printBorders;
     private boolean printBeforeSolved;
     private boolean fileInput;
+	private boolean countChecks;
+	private int minChecks;
 
     public InputParser(String[] args) {
         tokens = new ArrayList<>();
@@ -18,6 +20,8 @@ public class InputParser {
         printBorders = false;
         printBeforeSolved = true;
         fileInput = false;
+		countChecks = false;
+		minChecks = -1;
         settingsFromTokens();
     }
 
@@ -34,6 +38,7 @@ public class InputParser {
             boardString = "";
             return;
         }
+		int minChecksTokenIndex = -1;
         for(int i = 0; i < tokens.size(); i++) {
             if(tokens.get(i).startsWith("-")) {
                 String options = tokens.get(i).substring(1);
@@ -48,9 +53,18 @@ public class InputParser {
                         case 'f':
                             fileInput = true;
                             break;
+						case 'c':
+							countChecks = true;
+							break;
+						case 'r':
+							minChecksTokenIndex = i+1;
+							break;
                     }
                 }
             }
+			else if(i == minChecksTokenIndex && i != tokens.size() - 1) {
+				minChecks = Integer.parseInt(tokens.get(i));
+			}
         }
         boardString = tokens.get(tokens.size() - 1);
     }
@@ -70,4 +84,12 @@ public class InputParser {
     public boolean getPrintBeforeSolved() {
         return printBeforeSolved;
     }
+
+	public boolean getCountChecks() {
+		return countChecks;
+	}
+
+	public int getMinChecks() {
+		return minChecks;
+	}
 }
