@@ -40,7 +40,7 @@ public class Main {
     static CheckCounter solveBoard(String boardString, InputParser parser) {
         boolean borders = parser.getPrintBorders();
         boolean printBeforeSolved = parser.getPrintBeforeSolved();
-		CheckCounter counter = new CheckCounter();
+		CheckCounter counter = new CheckCounter(parser.getCountChecks());
 
         if(boardString.length() != 81) {
             System.out.println("Invalid board string, incorrect length, must be 81 characters");
@@ -52,7 +52,6 @@ public class Main {
             board.print(borders);
         }
 
-		counter.setShouldCount(parser.getCountChecks());
         if(board.solve(counter)) {
 			if(counter.getShouldCount()) {
 				System.out.println("Solved in " + counter + " checks!");

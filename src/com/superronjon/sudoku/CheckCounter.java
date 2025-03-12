@@ -5,18 +5,15 @@ import java.math.BigInteger;
 public class CheckCounter
 {
 	private BigInteger count;
-	private boolean shouldCount;
+	private final boolean shouldCount;
 
-	public CheckCounter() {
-		count = new BigInteger("-1");
-		shouldCount = false;
-	}
-
-	public void setShouldCount(boolean shouldCount)
-	{
+	public CheckCounter(boolean shouldCount) {
 		this.shouldCount = shouldCount;
-		if(this.shouldCount && count.intValue() == -1) {
+		if(this.shouldCount) {
 			count = new BigInteger("0");
+		}
+		else {
+			count = new BigInteger("-1");
 		}
 	}
 
