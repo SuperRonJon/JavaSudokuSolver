@@ -1,7 +1,7 @@
+import com.superronjon.inputparse.GenericInputParser;
 import com.superronjon.inputparse.Option;
 import com.superronjon.sudoku.Board;
 import com.superronjon.sudoku.CheckCounter;
-import com.superronjon.inputparse.GenericInputParser;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
