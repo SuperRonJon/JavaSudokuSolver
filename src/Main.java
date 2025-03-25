@@ -25,7 +25,7 @@ public class Main {
         String boardString = inputParser.getUnflaggedArgument(0);
 		boolean fileInput = Boolean.parseBoolean(inputParser.getOptionValue('f'));
 
-        if(boardString.equalsIgnoreCase("example")) {
+        if(boardString == null || boardString.equalsIgnoreCase("example")) {
             System.out.println("Example board: " + exampleBoard);
             return;
         }
