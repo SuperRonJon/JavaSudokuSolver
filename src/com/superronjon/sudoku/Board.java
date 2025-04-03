@@ -63,9 +63,7 @@ public class Board {
         }
 
         for(int i = 1; i <= BOARD_SIZE; i++) {
-			if(counter.getShouldCount()) {
-				counter.addOne();
-			}
+            counter.addOne();
             if(isPossibility(i, row, col)) {
                 grid[row][col].setValue(i);
                 if(solve(row, col+1, counter)) {

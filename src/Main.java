@@ -7,7 +7,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,7 +91,7 @@ public class Main {
                 count++;
                 System.out.println("Puzzle #" + count + " - " + line);
                 CheckCounter counter = solveBoard(line, parser);
-				if(counter.getCount().compareTo(new BigInteger(Integer.toString(MIN_COUNTS))) >= 0 && MIN_COUNTS != -1) {
+				if(counter.getCount() >= MIN_COUNTS && MIN_COUNTS != -1) {
 					bigCounts.add(line);
 				}
                 line = br.readLine();

@@ -1,24 +1,24 @@
 package com.superronjon.sudoku;
 
-import java.math.BigInteger;
-
 public class CheckCounter
 {
-	private BigInteger count;
+	private Long count;
 	private final boolean shouldCount;
 
 	public CheckCounter(boolean shouldCount) {
 		this.shouldCount = shouldCount;
 		if(this.shouldCount) {
-			count = new BigInteger("0");
+			count = 0L;
 		}
 		else {
-			count = new BigInteger("-1");
+			count = -1L;
 		}
 	}
 
 	public void add(int toAdd) {
-		this.count = count.add(new BigInteger(Integer.toString(toAdd)));
+		if(this.shouldCount) {
+			this.count += toAdd;
+		}
 	}
 
 	public void addOne() {
@@ -33,7 +33,7 @@ public class CheckCounter
 		return shouldCount;
 	}
 
-	public BigInteger getCount() {
+	public Long getCount() {
 		return count;
 	}
 }
