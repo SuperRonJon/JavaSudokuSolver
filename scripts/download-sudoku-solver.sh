@@ -9,6 +9,7 @@ unzip ./sudoku-solver.zip
 chmod +x ./sudoku-solver.sh
 mkdir -p $HOME/bin
 mv ./sudoku-solver.sh $HOME/bin/sudoku-solver
+mv ./sudoku-solver.bat $HOME/bin/sudoku-solver.bat
 mv ./sudoku.jar $HOME/bin/sudoku.jar
 cd ..
 rm -rf tmp-sudoku-download/
