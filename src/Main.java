@@ -1,5 +1,6 @@
 import com.superronjon.inputparse.GenericInputParser;
 import com.superronjon.inputparse.Option;
+import com.superronjon.inputparse.UnrecognizedOptionException;
 import com.superronjon.sudoku.Board;
 import com.superronjon.sudoku.CheckCounter;
 
@@ -13,7 +14,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         final String exampleBoard = "x56xxx27872xx361xx8xxxxx46x5xxx47xxx4x9xxx7x5xxx65xxx4x35xxxxx7xx718xx32918xxx54x";
-		final String VERSION = "v1.4";
+		final String VERSION = "v1.5";
 		GenericInputParser inputParser = new GenericInputParser();
 		inputParser.addOption('b', "borders");
 		inputParser.addOption('p', "print-solved");
@@ -21,7 +22,14 @@ public class Main {
 		inputParser.addOption('c', "count");
 		inputParser.addOption('r', "required-checks", true, "-1");
 		inputParser.addOption('v', "version");
-		inputParser.parseInput(args);
+
+		try{
+			inputParser.parseInput(args);
+		}
+		catch(UnrecognizedOptionException e) {
+			System.out.println(e.getMessage());
+			return;
+		}
 
 		if(Boolean.parseBoolean(inputParser.getOptionValue("version"))) {
 			System.out.println("sudoku-solver " + VERSION);
