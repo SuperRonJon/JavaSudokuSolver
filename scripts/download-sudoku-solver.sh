@@ -14,4 +14,4 @@ mv ./sudoku.jar $HOME/bin/sudoku.jar
 cd ..
 rm -rf tmp-sudoku-download/
 echo "Installed script and jar to $HOME/bin"
-echo 'add \"[[ ":$PATH:" == *:$HOME/bin:* ]] || PATH="$PATH:$HOME/bin"\" to your .bashrc or .zshrc file if your $HOME/bin folder is not already on your path.'
+echo 'add "PATH=$PATH:$HOME/bin" to your .bashrc or .zshrc file if your $HOME/bin folder is not already on your path.'
