@@ -1,5 +1,4 @@
 import com.superronjon.inputparse.GenericInputParser;
-import com.superronjon.inputparse.Option;
 import com.superronjon.inputparse.UnrecognizedOptionException;
 import com.superronjon.sudoku.Board;
 import com.superronjon.sudoku.CheckCounter;
@@ -14,14 +13,16 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         final String exampleBoard = "x56xxx27872xx361xx8xxxxx46x5xxx47xxx4x9xxx7x5xxx65xxx4x35xxxxx7xx718xx32918xxx54x";
-		final String VERSION = "v1.5";
-		GenericInputParser inputParser = new GenericInputParser();
-		inputParser.addOption('b', "borders");
-		inputParser.addOption('p', "print-solved");
-		inputParser.addOption('f', "file");
-		inputParser.addOption('c', "count");
-		inputParser.addOption('r', "required-checks", true, "-1");
-		inputParser.addOption('v', "version");
+		final String VERSION = "v1.6";
+		GenericInputParser inputParser = new GenericInputParser("sudoku-solver", "sudoku-solver [OPTIONS...] boardString|filePath");
+		inputParser.addOption('b', "borders", "Print board with border lines");
+		inputParser.addOption('p', "print-solved", "Prints only the solved board, not the starting board");
+		inputParser.addOption('f', "file", "Reads boards line by line from an input file path rather than a single string");
+		inputParser.addOption('c', "count", "Prints the total number of individual box checks required to solve");
+		inputParser.addOption('r', "required-checks", true, "-1", "If counting and from a file input, prints all boards in file above this number of checks");
+        inputParser.addOption('e', "example", "Prints an example valid sudoku board string");
+		inputParser.addOption('v', "version", "Prints version number");
+        inputParser.addOption('h', "help", "Prints help menu.");
 
 		try{
 			inputParser.parseInput(args);
@@ -36,10 +37,25 @@ public class Main {
 			return;
 		}
 
+        if(Boolean.parseBoolean(inputParser.getOptionValue("help"))) {
+            inputParser.printHelp();
+            return;
+        }
+
+        if(Boolean.parseBoolean(inputParser.getOptionValue("example"))) {
+            System.out.println("Example board string: " + exampleBoard);
+            return;
+        }
+
         String boardString = inputParser.getUnflaggedArgument(0);
 		boolean fileInput = Boolean.parseBoolean(inputParser.getOptionValue('f'));
 
-        if(boardString == null || boardString.equalsIgnoreCase("example")) {
+        if(boardString == null || boardString.isEmpty()) {
+            System.out.println("No input detected... requires a board string or filepath. Use --help for more info.");
+            return;
+        }
+
+        if(boardString.equalsIgnoreCase("example")) {
             System.out.println("Example board: " + exampleBoard);
             return;
         }
