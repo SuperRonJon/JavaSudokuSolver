@@ -62,9 +62,6 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/SuperRonJon/JavaSudokuSolv
 ## Update script
 
 - Run this script if you have already installed sudoku-solver via the above script, and it will update your jar to the latest version automatically
-## New install script
-
-- The install script can be run on git bash on windows or in the terminal on unix to download the latest release, unzip and install the new jar and start script to your `$HOME/bin` folder, which can be added to your path to execute the program from the command line, and can be re-ran to update to the newest release version.
 
 ```
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/SuperRonJon/JavaSudokuSolver/master/scripts/update-sudoku-solver.sh)"
