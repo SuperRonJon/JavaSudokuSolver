@@ -10,3 +10,4 @@ jar -cfe sudoku.jar Main Main.class com/superronjon/sudoku/*.class com/superronj
 mkdir -p ../out
 rm -f ../out/sudoku.jar
 mv sudoku.jar ../out/sudoku.jar
+echo "Created out/sudoku.jar"
