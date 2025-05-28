@@ -13,7 +13,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         final String exampleBoard = "x56xxx27872xx361xx8xxxxx46x5xxx47xxx4x9xxx7x5xxx65xxx4x35xxxxx7xx718xx32918xxx54x";
-		final String VERSION = "v1.6";
+		final String VERSION = "v1.7";
 		GenericInputParser inputParser = new GenericInputParser("sudoku-solver", "sudoku-solver [OPTIONS...] boardString|filePath");
 		inputParser.addOption('b', "borders", "Print board with border lines");
 		inputParser.addOption('p', "print-solved", "Prints only the solved board, not the starting board");
