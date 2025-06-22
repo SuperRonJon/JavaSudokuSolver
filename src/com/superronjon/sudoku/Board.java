@@ -3,8 +3,15 @@ package com.superronjon.sudoku;
 public class Board {
     private static final int BOARD_SIZE = 9;
     Box[][] grid;
+    Long count;
 
-    public Board(String boardString) {
+    public Board(String boardString, boolean shouldCount) {
+        if(shouldCount) {
+            count = 0L;
+        }
+        else {
+            count = -1L;
+        }
         int index = 0;
         grid = new Box[BOARD_SIZE][BOARD_SIZE];
 
@@ -41,15 +48,19 @@ public class Board {
         }
     }
 
-    public boolean solve(CheckCounter counter) {
-        return solve(0, 0, counter);
-    }
-
     public int valueAt(int row, int col) {
         return grid[row][col].getValue();
     }
 
-    private boolean solve(int row, int col, CheckCounter counter) {
+    public Long getCount() {
+        return this.count;
+    }
+
+    public boolean solve() {
+        return solve(0, 0);
+    }
+
+    private boolean solve(int row, int col) {
         if(row == BOARD_SIZE - 1 && col == BOARD_SIZE) {
             return true;
         }
@@ -59,14 +70,16 @@ public class Board {
         }
 
         if(!grid[row][col].isEmpty()) {
-            return solve(row, col+1, counter);
+            return solve(row, col+1);
         }
 
         for(int i = 1; i <= BOARD_SIZE; i++) {
-            counter.addOne();
+            if(count >= 0) {
+                count++;
+            }
             if(isPossibility(i, row, col)) {
                 grid[row][col].setValue(i);
-                if(solve(row, col+1, counter)) {
+                if(solve(row, col+1)) {
                     return true;
                 }
                 grid[row][col].clear();

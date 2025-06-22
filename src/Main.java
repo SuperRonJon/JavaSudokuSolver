@@ -1,7 +1,6 @@
 import com.superronjon.inputparse.GenericInputParser;
 import com.superronjon.inputparse.UnrecognizedOptionException;
 import com.superronjon.sudoku.Board;
-import com.superronjon.sudoku.CheckCounter;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -14,15 +13,7 @@ public class Main {
     public static void main(String[] args) {
         final String exampleBoard = "x56xxx27872xx361xx8xxxxx46x5xxx47xxx4x9xxx7x5xxx65xxx4x35xxxxx7xx718xx32918xxx54x";
         final String VERSION = "v1.7";
-        GenericInputParser inputParser = new GenericInputParser("sudoku-solver", "sudoku-solver [OPTIONS...] boardString|filePath");
-        inputParser.addOption('b', "borders", "Print board with border lines");
-        inputParser.addOption('p', "print-solved", "Prints only the solved board, not the starting board");
-        inputParser.addOption('f', "file", "Reads boards line by line from an input file path rather than a single string");
-        inputParser.addOption('c', "count", "Prints the total number of individual box checks required to solve");
-        inputParser.addOption('r', "required-checks", true, "-1", "If counting and from a file input, prints all boards in file above this number of checks");
-        inputParser.addOption('e', "example", "Prints an example valid sudoku board string");
-        inputParser.addOption('v', "version", "Prints version number");
-        inputParser.addOption('h', "help", "Prints help menu.");
+        GenericInputParser inputParser = createInputParser();
 
         try{
             inputParser.parseInput(args);
@@ -76,24 +67,24 @@ public class Main {
         System.out.println("Example: " + exampleBoard);
     }
 
-    static CheckCounter solveBoard(String boardString, GenericInputParser parser) {
+    static Long solveBoard(String boardString, GenericInputParser parser) {
         boolean borders = Boolean.parseBoolean(parser.getOptionValue('b'));
         boolean printBeforeSolved = !Boolean.parseBoolean(parser.getOptionValue('p'));
-        CheckCounter counter = new CheckCounter(Boolean.parseBoolean(parser.getOptionValue('c')));
+        boolean shouldCount = Boolean.parseBoolean(parser.getOptionValue('c'));
 
         if(boardString.length() != 81) {
             System.out.println("Invalid board string, incorrect length, must be 81 characters");
-            return counter;
+            return -1L;
         }
 
-        Board board = new Board(boardString);
+        Board board = new Board(boardString, shouldCount);
         if(printBeforeSolved) {
             board.print(borders);
         }
 
-        if(board.solve(counter)) {
-            if(counter.getShouldCount()) {
-                System.out.println("Solved in " + counter + " checks!");
+        if(board.solve()) {
+            if(shouldCount) {
+                System.out.println("Solved in " + board.getCount() + " checks!");
             }
             else {
                 System.out.println("Solved!");
@@ -101,14 +92,14 @@ public class Main {
             board.print(borders);
         }
         else {
-            if(counter.getShouldCount()) {
-                System.out.println("Unable to solve after " + counter + " checks...");
+            if(shouldCount) {
+                System.out.println("Unable to solve after " + board.getCount() + " checks...");
             }
             else {
                 System.out.println("Unable to solve...");
             }
         }
-        return counter;
+        return board.getCount();
     }
 
     static void solveBoardsFromFile(String fileName, GenericInputParser parser) throws FileNotFoundException {
@@ -120,8 +111,8 @@ public class Main {
             while(line != null) {
                 count++;
                 System.out.println("Puzzle #" + count + " - " + line);
-                CheckCounter counter = solveBoard(line, parser);
-                if(counter.getCount() >= MIN_COUNTS && MIN_COUNTS != -1) {
+                Long counter = solveBoard(line, parser);
+                if(counter >= MIN_COUNTS && MIN_COUNTS != -1) {
                     bigCounts.add(line);
                 }
                 line = br.readLine();
@@ -138,5 +129,18 @@ public class Main {
         } catch (IOException e) {
             System.out.println("Error reading input file: " + fileName);
         }
+    }
+
+    static GenericInputParser createInputParser() {
+        GenericInputParser inputParser = new GenericInputParser("sudoku-solver", "sudoku-solver [OPTIONS...] boardString|filePath");
+        inputParser.addOption('b', "borders", "Print board with border lines");
+        inputParser.addOption('p', "print-solved", "Prints only the solved board, not the starting board");
+        inputParser.addOption('f', "file", "Reads boards line by line from an input file path rather than a single string");
+        inputParser.addOption('c', "count", "Prints the total number of individual box checks required to solve");
+        inputParser.addOption('r', "required-checks", true, "-1", "If counting and from a file input, prints all boards in file above this number of checks");
+        inputParser.addOption('e', "example", "Prints an example valid sudoku board string");
+        inputParser.addOption('v', "version", "Prints version number");
+        inputParser.addOption('h', "help", "Prints help menu.");
+        return inputParser;
     }
 }
