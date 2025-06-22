@@ -22,5 +22,5 @@ mv sudoku.jar $OUTPUT_DIR/sudoku.jar
 cp ../sudoku-solver.sh $OUTPUT_DIR/sudoku-solver.sh
 cp ../sudoku-solver.bat $OUTPUT_DIR/sudoku-solver.bat
 cd $OUTPUT_DIR
-tar -czvf $OUTPUT_NAME.tar.gz ./*
-zip sudoku-solver.zip sudoku.jar sudoku-solver.sh sudoku-solver.bat
+command -v tar &>/dev/null && tar -czvf $OUTPUT_NAME.tar.gz ./*
+command -v zip &>/dev/null && zip sudoku-solver.zip sudoku.jar sudoku-solver.sh sudoku-solver.bat
