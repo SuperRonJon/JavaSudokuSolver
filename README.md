@@ -27,13 +27,22 @@ Solved!
 
 ```
 ## Options
-`sudoku-solver [OPTIONS] board-string|filepath`
-- --borders, -b = Prints the boards with border-lines
-- --print-solved, -p = Prints only the solved board and not the before board like it does by default
-- --file, -f = reads multiple boards from a file rather than a single board from the CLI, takes the path to the text file as input rather than the board string.
-- --count, -c = count the number of individual box checks required to solve the puzzle
-- --version, -v = print version number
-- --required-checks VAL = when reading from a file and counting the checks, at the end of the output print all boards that require more than VAL number of checks to solve
+
+```
+-> $ sudoku-solver --help
+
+sudoku-solver - Usage: sudoku-solver [OPTIONS...] boardString|filePath
+Available Options:
+ --borders, -b                Print board with border lines
+ --print-solved, -p           Prints only the solved board, not the starting board
+ --file, -f                   Reads boards line by line from an input file path rather than a single string
+ --count, -c                  Prints the total number of individual box checks required to solve
+ --required-checks, -r VAL    If counting and from a file input, prints all boards in file above this number of checks
+ --example, -e                Prints an example valid sudoku board string
+ --version, -v                Prints version number
+ --help, -h                   Prints help menu.
+```
+
 # Installation
 ## Release Artifacts
 
