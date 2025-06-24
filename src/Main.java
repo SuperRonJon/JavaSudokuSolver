@@ -132,7 +132,7 @@ public class Main {
     }
 
     static GenericInputParser createInputParser() {
-        GenericInputParser inputParser = new GenericInputParser("sudoku-solver", "sudoku-solver [OPTIONS...] boardString|filePath");
+        GenericInputParser inputParser = new GenericInputParser("Sudoku Solver", "sudoku-solver [OPTIONS...] boardString|filePath");
         inputParser.addOption('b', "borders", "Print board with border lines");
         inputParser.addOption('p', "print-solved", "Prints only the solved board, not the starting board");
         inputParser.addOption('f', "file", "Reads boards line by line from an input file path rather than a single string");
